@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Db_HotelModelStoreContainer" CdmEntityContainer="Db_Hotele">
+    <EntitySetMapping Name="Client">
+      <EntityTypeMapping TypeName="Db_HotelModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="CIN" ColumnName="CIN" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maison">
+      <EntityTypeMapping TypeName="Db_HotelModel.Maison">
+        <MappingFragment StoreEntitySet="Maison">
+          <ScalarProperty Name="id_Maison" ColumnName="id_Maison" />
+          <ScalarProperty Name="Num" ColumnName="Num" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pertes">
+      <EntityTypeMapping TypeName="Db_HotelModel.Pertes">
+        <MappingFragment StoreEntitySet="Pertes">
+          <ScalarProperty Name="Id_Pert" ColumnName="Id_Pert" />
+          <ScalarProperty Name="Descrip" ColumnName="Descrip" />
+          <ScalarProperty Name="datePert" ColumnName="datePert" />
+          <ScalarProperty Name="valeur" ColumnName="valeur" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservation">
+      <EntityTypeMapping TypeName="Db_HotelModel.Reservation">
+        <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="duree" ColumnName="duree" />
+          <ScalarProperty Name="etat" ColumnName="etat" />
+          <ScalarProperty Name="Id_Reservation" ColumnName="Id_Reservation" />
+          <ScalarProperty Name="CIN" ColumnName="CIN" />
+          <ScalarProperty Name="id_Maison" ColumnName="id_Maison" />
+          <ScalarProperty Name="dateDebut" ColumnName="dateDebut" />
+          <ScalarProperty Name="dateFin" ColumnName="dateFin" />
+          <ScalarProperty Name="avance" ColumnName="avance" />
+          <ScalarProperty Name="date_reservation" ColumnName="date_reservation" />
+          <ScalarProperty Name="prix" ColumnName="prix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

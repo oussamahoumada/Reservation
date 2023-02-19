@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Db_HotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="CIN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Maison">
+          <Key>
+            <PropertyRef Name="id_Maison" />
+          </Key>
+          <Property Name="id_Maison" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Num" Type="int" />
+        </EntityType>
+        <EntityType Name="Pertes">
+          <Key>
+            <PropertyRef Name="Id_Pert" />
+          </Key>
+          <Property Name="Id_Pert" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descrip" Type="varchar" MaxLength="255" />
+          <Property Name="datePert" Type="date" />
+          <Property Name="valeur" Type="float" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="Id_Reservation" />
+          </Key>
+          <Property Name="Id_Reservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CIN" Type="varchar" MaxLength="50" />
+          <Property Name="id_Maison" Type="int" />
+          <Property Name="dateDebut" Type="date" />
+          <Property Name="dateFin" Type="date" />
+          <Property Name="avance" Type="float" />
+          <Property Name="date_reservation" Type="date" />
+          <Property Name="prix" Type="float" />
+          <Property Name="etat" Type="bit" />
+          <Property Name="duree" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK__Reservati__id_Ma__29572725">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="id_Maison" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_Maison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reservation__CIN__286302EC">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="CIN" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="CIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db_HotelModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maison" EntityType="Self.Maison" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pertes" EntityType="Self.Pertes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Reservati__id_Ma__29572725" Association="Self.FK__Reservati__id_Ma__29572725">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reservation__CIN__286302EC" Association="Self.FK__Reservation__CIN__286302EC">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Db_HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="CIN" />
+          </Key>
+          <Property Name="CIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK__Reservation__CIN__286302EC" FromRole="Client" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Maison">
+          <Key>
+            <PropertyRef Name="id_Maison" />
+          </Key>
+          <Property Name="id_Maison" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Num" Type="Int32" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK__Reservati__id_Ma__29572725" FromRole="Maison" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Pertes">
+          <Key>
+            <PropertyRef Name="Id_Pert" />
+          </Key>
+          <Property Name="Id_Pert" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="datePert" Type="DateTime" Precision="0" />
+          <Property Name="valeur" Type="Double" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="Id_Reservation" />
+          </Key>
+          <Property Name="Id_Reservation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_Maison" Type="Int32" />
+          <Property Name="dateDebut" Type="DateTime" Precision="0" />
+          <Property Name="dateFin" Type="DateTime" Precision="0" />
+          <Property Name="avance" Type="Double" />
+          <Property Name="date_reservation" Type="DateTime" Precision="0" />
+          <Property Name="prix" Type="Double" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Reservation__CIN__286302EC" FromRole="Reservation" ToRole="Client" />
+          <NavigationProperty Name="Maison" Relationship="Self.FK__Reservati__id_Ma__29572725" FromRole="Reservation" ToRole="Maison" />
+          <Property Name="etat" Type="Boolean" />
+          <Property Name="duree" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK__Reservation__CIN__286302EC">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="CIN" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="CIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reservati__id_Ma__29572725">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="id_Maison" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_Maison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db_Hotele" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Maison" EntityType="Self.Maison" />
+          <EntitySet Name="Pertes" EntityType="Self.Pertes" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" />
+          <AssociationSet Name="FK__Reservation__CIN__286302EC" Association="Self.FK__Reservation__CIN__286302EC">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reservati__id_Ma__29572725" Association="Self.FK__Reservati__id_Ma__29572725">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Db_HotelModelStoreContainer" CdmEntityContainer="Db_Hotele">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Db_HotelModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="CIN" ColumnName="CIN" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maison">
+            <EntityTypeMapping TypeName="Db_HotelModel.Maison">
+              <MappingFragment StoreEntitySet="Maison">
+                <ScalarProperty Name="id_Maison" ColumnName="id_Maison" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pertes">
+            <EntityTypeMapping TypeName="Db_HotelModel.Pertes">
+              <MappingFragment StoreEntitySet="Pertes">
+                <ScalarProperty Name="Id_Pert" ColumnName="Id_Pert" />
+                <ScalarProperty Name="Descrip" ColumnName="Descrip" />
+                <ScalarProperty Name="datePert" ColumnName="datePert" />
+                <ScalarProperty Name="valeur" ColumnName="valeur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservation">
+            <EntityTypeMapping TypeName="Db_HotelModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="duree" ColumnName="duree" />
+                <ScalarProperty Name="etat" ColumnName="etat" />
+                <ScalarProperty Name="Id_Reservation" ColumnName="Id_Reservation" />
+                <ScalarProperty Name="CIN" ColumnName="CIN" />
+                <ScalarProperty Name="id_Maison" ColumnName="id_Maison" />
+                <ScalarProperty Name="dateDebut" ColumnName="dateDebut" />
+                <ScalarProperty Name="dateFin" ColumnName="dateFin" />
+                <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="date_reservation" ColumnName="date_reservation" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

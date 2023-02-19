@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Db_HotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="CIN" />
+    </Key>
+    <Property Name="CIN" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nom" Type="varchar" MaxLength="50" />
+    <Property Name="Tel" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Maison">
+    <Key>
+      <PropertyRef Name="id_Maison" />
+    </Key>
+    <Property Name="id_Maison" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Num" Type="int" />
+  </EntityType>
+  <EntityType Name="Pertes">
+    <Key>
+      <PropertyRef Name="Id_Pert" />
+    </Key>
+    <Property Name="Id_Pert" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descrip" Type="varchar" MaxLength="255" />
+    <Property Name="datePert" Type="date" />
+    <Property Name="valeur" Type="float" />
+  </EntityType>
+  <EntityType Name="Reservation">
+    <Key>
+      <PropertyRef Name="Id_Reservation" />
+    </Key>
+    <Property Name="Id_Reservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CIN" Type="varchar" MaxLength="50" />
+    <Property Name="id_Maison" Type="int" />
+    <Property Name="dateDebut" Type="date" />
+    <Property Name="dateFin" Type="date" />
+    <Property Name="avance" Type="float" />
+    <Property Name="date_reservation" Type="date" />
+    <Property Name="prix" Type="float" />
+    <Property Name="etat" Type="bit" />
+    <Property Name="duree" Type="int" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <Association Name="FK__Reservati__id_Ma__29572725">
+    <End Role="Maison" Type="Self.Maison" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Maison">
+        <PropertyRef Name="id_Maison" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="id_Maison" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reservation__CIN__286302EC">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="CIN" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="CIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Db_HotelModelStoreContainer">
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Maison" EntityType="Self.Maison" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pertes" EntityType="Self.Pertes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Reservati__id_Ma__29572725" Association="Self.FK__Reservati__id_Ma__29572725">
+      <End Role="Maison" EntitySet="Maison" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reservation__CIN__286302EC" Association="Self.FK__Reservation__CIN__286302EC">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Reservation" EntitySet="Reservation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
